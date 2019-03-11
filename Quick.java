@@ -102,5 +102,83 @@ public class Quick{
     }
     return result;
   }
-  
+
+  /**Return the value that is the kth smallest value of the array
+  *@param int[] data
+  *@param int k is the index given
+  *@return int the kth smallest value of the array
+  */
+  public static int quickselect(int[] data, int k){
+    quickselectH(data, 0, data.length - 1); //helper function
+    return data[k]; //return the value at index
+  }
+
+  /**A recursive helper method that partitions and sorts repeatedly until all values are sorted
+  *@param int[] data
+  *@param int start is the start of the partition
+  *@param int end is the end of the partition
+  */
+  public static void quickselectH(int[] data, int start, int end){
+    if(start < end){ //eventually the start and end will be the same when the length of the partition range becomes one
+      //as long as start and end are not equal, the partition range will be greater than 1, which means more can be partitioned
+      int pivot = partition(data, start, end); //partition once to get a pivot
+      quickselectH(data, start, pivot); //partition from the start to the pivot
+      quickselectH(data, pivot + 1, end); //partition from the pivot + 1 to the end;
+    }
+  }
+
+  public static void main(String[] args){
+    int[] test1 = {999, 999, 999, 4, 1, 0, 3, 2, 999, 999, 999};
+    //System.out.println(quickselect(test1, 0));
+    //System.out.println(quickselect(test1, 1));
+    //System.out.println(quickselect(test1, 2));
+    //System.out.println(quickselect(test1, 3));
+    //System.out.println(quickselect(test1, 4));
+    System.out.println(quickselect(test1, 5));
+    System.out.println(print(test1));
+
+    Random num = new Random();
+    int[] test2 = new int[100];
+    for(int i = 0; i < test2.length; i++){
+      test2[i] = num.nextInt() % 1000;
+    }
+
+    System.out.println(print(test2));
+    System.out.println(quickselect(test2, 0));
+    System.out.println(print(test2));
+
+    int[] test3 = new int[1000];
+    int tempTest3 = 999;
+    for(int i = 0; i < test3.length; i++){
+      test3[i] = tempTest3;
+      tempTest3--;
+    }
+    System.out.println(quickselect(test3, 0));
+
+
+    for(int i = 1; i < 10000; i++){
+      int[] test = new int[i];
+      int temp = i-1;
+      for(int y = 0; y < test.length; y++){
+        test[y] = temp;
+        temp--;
+      }
+      if(i == 9999) System.out.println(print(test));
+      if(quickselect(test, 0) == 0){
+        System.out.println("success " + i);
+      }else{
+        System.out.println("fail " + i);
+      }
+      if(i == 9999) System.out.println(print(test));
+    }
+
+    int[] test4 = new int[100];
+    for(int i = 0; i < test4.length; i++){
+      test4[i] = 6;
+    }
+    System.out.println(quickselect(test4, 0));
+    System.out.println(quickselect(test4, test4.length - 1));
+
+  }
+
 }
