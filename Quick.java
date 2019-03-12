@@ -103,14 +103,26 @@ public class Quick{
     return result;
   }
 
+  public static int quickselect(int[] data, int k){
+    quickselectH(data, 0, data.length - 1, k);
+    return data[k];
+  }
+
+  public static void quickselectH(int[] data, int start, int end, int k){
+    if(start < end && start != end){ //if the partition range is not 0, meaning there are more values to partition
+      int pivot = partition(data, start, end); //partition once and get a pivot
+      if(k < pivot){ //if k is smaller than the pivot, partition the array values before the pivot
+        quickselectH(data, start, pivot, k);
+      }else if(k > pivot) quickselectH(data, pivot+1, end, k); //if k is greater than the pivot, partition the array values after the pivot
+    }
+    //if k is equal to the pivot, we can just return the value at k, so we do nothing
+  }
+
   /**Return the value that is the kth smallest value of the array
   *@param int[] data
-  *@param int k is the index given
-  *@return int the kth smallest value of the array
   */
-  public static int quickselect(int[] data, int k){
-    quickselectH(data, 0, data.length - 1); //helper function
-    return data[k]; //return the value at index
+  public static void quicksort(int[] data){
+    quicksortH(data, 0, data.length - 1); //helper function
   }
 
   /**A recursive helper method that partitions and sorts repeatedly until all values are sorted
@@ -118,24 +130,25 @@ public class Quick{
   *@param int start is the start of the partition
   *@param int end is the end of the partition
   */
-  public static void quickselectH(int[] data, int start, int end){
-    if(start < end){ //eventually the start and end will be the same when the length of the partition range becomes one
+  public static void quicksortH(int[] data, int start, int end){
+    if(start < end && start != end){ //eventually the start and end will be the same when the length of the partition range becomes one
       //as long as start and end are not equal, the partition range will be greater than 1, which means more can be partitioned
       int pivot = partition(data, start, end); //partition once to get a pivot
-      quickselectH(data, start, pivot); //partition from the start to the pivot
-      quickselectH(data, pivot + 1, end); //partition from the pivot + 1 to the end;
+      quicksortH(data, start, pivot); //partition from the start to the pivot
+      quicksortH(data, pivot + 1, end); //partition from the pivot + 1 to the end;
     }
   }
 
   public static void main(String[] args){
     int[] test1 = {999, 999, 999, 4, 1, 0, 3, 2, 999, 999, 999};
-    //System.out.println(quickselect(test1, 0));
-    //System.out.println(quickselect(test1, 1));
-    //System.out.println(quickselect(test1, 2));
-    //System.out.println(quickselect(test1, 3));
-    //System.out.println(quickselect(test1, 4));
-    System.out.println(quickselect(test1, 5));
-    System.out.println(print(test1));
+    //System.out.println(quickselect(test1, 0)); //0
+    //System.out.println(quickselect(test1, 1)); //1
+    //System.out.println(quickselect(test1, 2)); //2
+    //System.out.println(quickselect(test1, 3)); //3
+    //System.out.println(quickselect(test1, 4)); //4
+    System.out.println(quickselect(test1, 5)); //999
+    quicksort(test1);
+    System.out.println(print(test1)); //[0, 1, 2, 3, 4, 999, 999, 999, 999, 999, 999]
 
     Random num = new Random();
     int[] test2 = new int[100];
@@ -145,7 +158,9 @@ public class Quick{
 
     System.out.println(print(test2));
     System.out.println(quickselect(test2, 0));
+    quicksort(test2);
     System.out.println(print(test2));
+
 
     int[] test3 = new int[1000];
     int tempTest3 = 999;
@@ -154,8 +169,11 @@ public class Quick{
       tempTest3--;
     }
     System.out.println(quickselect(test3, 0));
+    System.out.println(print(test3));
+    quicksort(test3);
+    System.out.println(print(test3));
 
-
+    /*
     for(int i = 1; i < 10000; i++){
       int[] test = new int[i];
       int temp = i-1;
@@ -178,7 +196,7 @@ public class Quick{
     }
     System.out.println(quickselect(test4, 0));
     System.out.println(quickselect(test4, test4.length - 1));
-
+*/
   }
 
 }
