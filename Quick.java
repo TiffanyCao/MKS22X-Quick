@@ -109,24 +109,22 @@ public class Quick{
   *@return int the value at index k
   */
   public static int quickselect(int[] data, int k){
-    /*int start = 0;
-    int end = data.length - 1;
-    int pivot = partition(data, start, end); //partition once and get a pivot
-    while(start < end){ //if k is equal to the pivot, we can just return the value at k, so we do nothing
-      if(k < pivot){ //if k is smaller than the pivot, partition the array values before the pivot
-        end = pivot - 1;
-      }else if(k > pivot) start = pivot + 1; //if k is greater than the pivot, partition the array values after the pivot
-      pivot = partition(data, start, end);
-    }*/
-    quickselectH(data, 0, data.length-1, k);
-    return data[k];
+    quickselectH(data, 0, data.length-1, k); //helper call
+    return data[k]; //return the value at index k
   }
 
+  /**A method that finds the kth smallest value of the array, using partition
+  *@param int[] data
+  *@param int start is the starting range of partition
+  *@param int end is the ending range of partition
+  *@param int k is the index given
+  */
   public static void quickselectH(int[] data, int start, int end, int k){
-    if(start != k && end != k){
-      int pivot = partition(data, start, end);
-      if(k < pivot) quickselectH(data, start, pivot-1, k);
-      if(k > pivot) quickselectH(data, pivot+1, end, k);
+    if(start < end && end != start){ //if the partition range is still greater than 1
+      //eventually partition range should just be the value at k
+      int pivot = partition(data, start, end); //partition once and get a pivot
+      if(k < pivot) quickselectH(data, start, pivot-1, k); //if k is smaller than the pivot, partition the array values before the pivot
+      if(k > pivot) quickselectH(data, pivot+1, end, k); //if k is greater than the pivot, partition the array values after the pivot
     }
   }
 
@@ -153,15 +151,16 @@ public class Quick{
 
   public static void main(String[] args){
     int[] test1 = {999, 999, 999, 4, 1, 0, 3, 2, 999, 999, 999};
-    System.out.println(quickselect(test1, 0)); //0
-    System.out.println(print(test1));
+    //System.out.println(quickselect(test1, 0)); //0
     //System.out.println(quickselect(test1, 1)); //1
     //System.out.println(quickselect(test1, 2)); //2
     //System.out.println(quickselect(test1, 3)); //3
     //System.out.println(quickselect(test1, 4)); //4
     //System.out.println(quickselect(test1, 5)); //999
+    //System.out.println(print(test1));
     quicksort(test1);
     System.out.println(print(test1)); //[0, 1, 2, 3, 4, 999, 999, 999, 999, 999, 999]
+
 
     Random num = new Random();
     int[] test2 = new int[100];
@@ -182,12 +181,12 @@ public class Quick{
       test3[i] = tempTest3;
       tempTest3--;
     }
-    System.out.println(quickselect(test3, 0));
+    System.out.println(quickselect(test3, 500));
     System.out.println(print(test3));
     quicksort(test3);
     System.out.println(print(test3));
 
-    /*
+
     for(int i = 1; i < 10000; i++){
       int[] test = new int[i];
       int temp = i-1;
@@ -196,12 +195,16 @@ public class Quick{
         temp--;
       }
       if(i == 9999) System.out.println(print(test));
-      if(quickselect(test, 0) == 0){
+      if(quickselect(test, 0) == 0 && quickselect(test, test.length-1) == i - 1){
         System.out.println("success " + i);
       }else{
         System.out.println("fail " + i);
       }
-      if(i == 9999) System.out.println(print(test));
+      if(i == 9999){
+        System.out.println(print(test));
+        quicksort(test);
+        System.out.println(print(test));
+      }
     }
 
     int[] test4 = new int[100];
@@ -210,7 +213,6 @@ public class Quick{
     }
     System.out.println(quickselect(test4, 0));
     System.out.println(quickselect(test4, test4.length - 1));
-*/
   }
 
 }
