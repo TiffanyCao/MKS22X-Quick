@@ -109,17 +109,25 @@ public class Quick{
   *@return int the value at index k
   */
   public static int quickselect(int[] data, int k){
-    int start = 0;
+    /*int start = 0;
     int end = data.length - 1;
     int pivot = partition(data, start, end); //partition once and get a pivot
-    while(start < end){ //if the partition range is not 0, meaning there are more values to partition
+    while(start < end){ //if k is equal to the pivot, we can just return the value at k, so we do nothing
       if(k < pivot){ //if k is smaller than the pivot, partition the array values before the pivot
         end = pivot - 1;
-      }else if(k > pivot) start = pivot; //if k is greater than the pivot, partition the array values after the pivot
+      }else if(k > pivot) start = pivot + 1; //if k is greater than the pivot, partition the array values after the pivot
       pivot = partition(data, start, end);
-    }
-    //if k is equal to the pivot, we can just return the value at k, so we do nothing
+    }*/
+    quickselectH(data, 0, data.length-1, k);
     return data[k];
+  }
+
+  public static void quickselectH(int[] data, int start, int end, int k){
+    if(start != k && end != k){
+      int pivot = partition(data, start, end);
+      if(k < pivot) quickselectH(data, start, pivot-1, k);
+      if(k > pivot) quickselectH(data, pivot+1, end, k);
+    }
   }
 
   /**A method that sorts an array using partition
