@@ -85,7 +85,29 @@ public class Quick{
       }
     }
     //if(starting >= ending) return starting-1;
-    return -1; //so it compiles
+
+    while(starting != ending){
+      if(data[start] < pivot) start++;
+      if(data[start] > pivot){
+        int temp = data[start];
+        data[start] = data[end];
+        data[end] = temp;
+        end--;
+      }
+    }
+    if(data[start] < pivot){
+      int temp = data[start];
+      data[start] = pivot;
+      data[pivotIndex] = temp;
+      toStart = true;
+      return start;
+    }else{
+      int temp = data[start-1];
+      data[start-1] = pivot;
+      data[pivotIndex] = temp;
+      toStart = true;
+      return start-1;
+    }
   }
 
   /**A method that prints out the array
@@ -144,7 +166,7 @@ public class Quick{
     if(start < end && start != end){ //eventually the start and end will be the same when the length of the partition range becomes one
       //as long as start and end are not equal, the partition range will be greater than 1, which means more can be partitioned
       int pivot = partition(data, start, end); //partition once to get a pivot
-      quicksortH(data, start, pivot); //partition from the start to the pivot
+      quicksortH(data, start, pivot - 1); //partition from the start to the pivot
       quicksortH(data, pivot + 1, end); //partition from the pivot + 1 to the end;
     }
   }
@@ -158,7 +180,7 @@ public class Quick{
     //System.out.println(quickselect(test1, 4)); //4
     //System.out.println(quickselect(test1, 5)); //999
     //System.out.println(print(test1));
-    quicksort(test1);
+    /*quicksort(test1);
     System.out.println(print(test1)); //[0, 1, 2, 3, 4, 999, 999, 999, 999, 999, 999]
 
 
@@ -194,13 +216,13 @@ public class Quick{
         test[y] = temp;
         temp--;
       }
-      if(i == 9999) System.out.println(print(test));
+      //if(i == 9999) System.out.println(print(test));
       if(quickselect(test, 0) == 0 && quickselect(test, test.length-1) == i - 1){
         System.out.println("success " + i);
       }else{
         System.out.println("fail " + i);
       }
-      if(i == 9999){
+      /*if(i == 9999){
         System.out.println(print(test));
         quicksort(test);
         System.out.println(print(test));
@@ -213,6 +235,18 @@ public class Quick{
     }
     System.out.println(quickselect(test4, 0));
     System.out.println(quickselect(test4, test4.length - 1));
+    */
+
+    //int[] ary = new int[1000000];
+    int[] ary2 = new int[1000000];
+    int temp = 999999;
+    for(int i = 0; i < 1000000; i++){
+      //ary[i] = temp;
+      ary2[i] = temp;
+      temp--;
+    }
+    //Arrays.sort(ary); .277s
+    quicksort(ary2);
   }
 
 }
