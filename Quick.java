@@ -27,31 +27,8 @@ public class Quick{
     pivotIndex = starting;
     int start = starting+1; //set the start to one greater than the start
     int end = ending; //end stays the same
-    //int originalStart = starting;
-    //int originalEnd = ending;
-    //toStart = false; //no need for setting up anymore
-      //System.out.println(pivotIndex);
-      //System.out.println(print(data));
-    //return partition(data, start, end); //recursive call
-    /*if(starting != ending && starting < ending){ //if more swaps can be tested and starting doesn't become more than ending
-      //System.out.println("starting " + starting);
-      //System.out.println("ending " + ending);
-      //System.out.println("start " + start);
-      //System.out.println("end " + end);
-      while(data[start] > pivot && start <= originalEnd && end >= originalStart && start != end){
-        //if the value at the start index is greater than the pivot and the start and end are within range and not equal to each other
-        int temp = data[start]; //swap with value at end index
-        data[start] = data[end];
-        data[end] = temp;
-        end--; //end index decreases
-      }
-      //System.out.println(print(data));
-      if(start != end) start++; //start index increases after the value at current start index is less than the pivot, unless start is equal to end
-      return partition(data, start, end); //recursive call with the new start and end
-    }*/
-
     while(start < end && start <= ending && end >= starting){ //start = end is the base case
-      if(data[start] <= pivot) start++; //if the value is less than the pivot, it doesn't move
+      if(data[start] <= pivot) start++; //if the value is less than or equal to the pivot, it doesn't move
       if(data[start] > pivot){ //if the value is greater than the pivot, switch with the value at end
         int temp = data[start];
         data[start] = data[end];
@@ -59,28 +36,17 @@ public class Quick{
         end--; //end decreases because the value is now in the right place
       }
     }
-    //if(starting == ending){ //if no more swaps should be tested...
-      //System.out.println("final starting " + starting);
-      //System.out.println("final ending " + ending);
-      //System.out.println("final start " + start);
-      //System.out.println("final end " + end);
     if(data[start] < pivot){ //if the value at the middle index is less than the pivot, switch with pivot
       int temp = data[start];
       data[start] = pivot;
       data[pivotIndex] = temp;
-      //toStart = true; //set up becomes true so next partition can be done
       pivotIndex = start;
-        //System.out.println(print(data));
-        //System.out.println(start);
-        return start; //return pivot's new index
+      return start; //return pivot's new index
     }else{ //if the value at the middle index is greater than the pivot, switch pivot with value at middle index - 1
       int temp = data[start-1];
       data[start-1] = pivot;
       data[pivotIndex] = temp;
-      //toStart = true; //set up becomes true so next partition can be done
       pivotIndex = start - 1;
-        //System.out.println(print(data));
-        //System.out.println(start-1);
       return start-1; //return pivot's new index
     }
     //if(starting >= ending) return starting-1;
@@ -154,7 +120,7 @@ public class Quick{
     //System.out.println(quickselect(test1, 2)); //2
     //System.out.println(quickselect(test1, 3)); //3
     //System.out.println(quickselect(test1, 4)); //4
-    //System.out.println(quickselect(test1, 5)); //999
+    System.out.println(quickselect(test1, 5)); //999
     System.out.println(print(test1));
     quicksort(test1);
     System.out.println(print(test1)); //[0, 1, 2, 3, 4, 999, 999, 999, 999, 999, 999]
@@ -172,8 +138,7 @@ public class Quick{
     quicksort(test2);
     System.out.println(print(test2));
 
-/*
-    int[] test3 = new int[1000];
+    /*int[] test3 = new int[1000];
     int tempTest3 = 999;
     for(int i = 0; i < test3.length; i++){
       test3[i] = tempTest3;
@@ -183,7 +148,7 @@ public class Quick{
     System.out.println(print(test3));
     quicksort(test3);
     System.out.println(print(test3));
-
+    */
 
     for(int i = 1; i < 10000; i++){
       int[] test = new int[i];
@@ -198,13 +163,8 @@ public class Quick{
       }else{
         System.out.println("fail " + i);
       }
-      /*if(i == 9999){
-        System.out.println(print(test));
-        quicksort(test);
-        System.out.println(print(test));
-      }*/
-    //}
-    /*
+    }
+
 
     int[] test4 = new int[100];
     for(int i = 0; i < test4.length; i++){
@@ -212,19 +172,28 @@ public class Quick{
     }
     System.out.println(quickselect(test4, 0));
     System.out.println(quickselect(test4, test4.length - 1));
-    */
 
-    //int[] ary = new int[1000000];
-    /*int[] ary2 = new int[1000000];
-    int temp = 999999;
+
+    int[] ary = new int[1000000];
+    Random number = new Random();
     for(int i = 0; i < 1000000; i++){
-      //ary[i] = temp;
-      ary2[i] = temp;
-      temp--;
+      ary[i] = number.nextInt();
     }
-    //Arrays.sort(ary); .277s
-    quicksort(ary2);
-    */
+    //Arrays.sort(ary); //0m0.282s for 1,000,000; 0m1.364s for 10,000,000
+    quicksort(ary); //0m0.324s for 1,000.000; 0m1.871s for 10,000,000
+
+    int temp = 0;
+    boolean order = true;
+    for(int i = 0; i < ary.length; i++){
+      if(i == 0){
+        temp = ary[i];
+      }else if(ary[i] < temp){
+        order = false;
+      }else{
+        temp = ary[i];
+      }
+    }
+    System.out.println(order);
   }
 
 }
