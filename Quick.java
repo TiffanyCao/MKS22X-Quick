@@ -34,26 +34,22 @@ public class Quick{
     int start = starting+1; //set the start to one greater than the start
     int end = ending; //end stays the same
     while(start != end){ //start = end is the base case
-      if(data[start] < pivot) start++; //if the value is less than the pivot, it doesn't move
-      if(data[start] == pivot){ //if the value is equal to the pivot
+      if(data[start] >= pivot){ //if the value is greater than or equal to the pivot
         int chance = choose.nextInt() % 2; //fifty-fifty chance of swapping it to the other side
-        if(chance == 0){
+        if(chance == 0 && data[start] == pivot){ //if the value is equal to the pivot
           int temp = data[start];
           data[start] = data[end];
           data[end] = temp;
           end--;
-        }else{
-          start++;
+        }else if(data[start] > pivot){ //if the value is greater than the pivot, switch with the value at end
+          int temp = data[start];
+          data[start] = data[end];
+          data[end] = temp;
+          end--; //end decreases because the value is now in the right place
         }
-      }
-      if(data[start] > pivot){ //if the value is greater than the pivot, switch with the value at end
-        int temp = data[start];
-        data[start] = data[end];
-        data[end] = temp;
-        end--; //end decreases because the value is now in the right place
-      }
+      }else start++; //start moves right if the value is in its correct side
     }
-    System.out.println(start + " " + end);
+    //System.out.println(start + " " + end);
     if(data[start] < pivot){ //if the value at the middle index is less than the pivot, switch with pivot
       int temp = data[start];
       data[start] = pivot;
@@ -156,7 +152,7 @@ public class Quick{
     quicksort(test2);
     System.out.println(print(test2) + "\n");
 
-    /*int[] test3 = new int[1000];
+    int[] test3 = new int[1000];
     int tempTest3 = 999;
     for(int i = 0; i < test3.length; i++){
       test3[i] = tempTest3;
@@ -166,9 +162,9 @@ public class Quick{
     System.out.println(print(test3));
     quicksort(test3);
     System.out.println(print(test3));
-    */
 
-/*
+
+
     for(int i = 1; i < 10000; i++){
       int[] corr = new int[i];
       int[] test = new int[i];
@@ -226,7 +222,7 @@ public class Quick{
       }
     }
     System.out.println(order);
-*/
+
   }
 
 }
