@@ -223,6 +223,35 @@ public class Quick{
     }
     System.out.println(order);
 
-  }
 
+    /*int[] array = new int[1000000];
+    Random numbers = new Random();
+    for(int i = 0; i < array.length; i++){
+      array[i] = numbers.nextInt();
+    }
+    */
+
+    //Arrays.sort(array); //0m0.424s
+    //quicksort(array); //0m0.520s
+
+    /*int[] array = new int[10000000];
+    Random numbers = new Random();
+    for(int i = 0; i < array.length; i++){
+      array[i] = numbers.nextInt();
+    }
+    */
+
+    //Arrays.sort(array); //0m1.720s
+    //quicksort(array); //0m3.238s
+
+    int[] array = new int[100000000];
+    Random numbers = new Random();
+    for(int i = 0; i < array.length; i++){
+      array[i] = numbers.nextInt();
+    }
+
+    //Arrays.sort(array); //0m12.223s
+    //quicksort(array); //0m32.393s
+
+  }
 }
