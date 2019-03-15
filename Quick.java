@@ -36,12 +36,7 @@ public class Quick{
     while(start != end){ //start = end is the base case
       if(data[start] >= pivot){ //if the value is greater than or equal to the pivot
         int chance = choose.nextInt() % 2; //fifty-fifty chance of swapping it to the other side
-        if(chance == 0 && data[start] == pivot){ //if the value is equal to the pivot
-          int temp = data[start];
-          data[start] = data[end];
-          data[end] = temp;
-          end--;
-        }else if(data[start] > pivot){ //if the value is greater than the pivot, switch with the value at end
+        if((chance == 0 && data[start] == pivot) || data[start] > pivot){ //if the value is equal to the pivot or greater than the pivot
           int temp = data[start];
           data[start] = data[end];
           data[end] = temp;
