@@ -33,7 +33,7 @@ public class Quick{
     pivotIndex = starting;
     int start = starting+1; //set the start to one greater than the start
     int end = ending; //end stays the same
-    while(start < end && start <= ending && end >= starting){ //start = end is the base case
+    while(start != end){ //start = end is the base case
       if(data[start] < pivot) start++; //if the value is less than the pivot, it doesn't move
       if(data[start] == pivot){ //if the value is equal to the pivot
         int chance = choose.nextInt() % 2; //fifty-fifty chance of swapping it to the other side
