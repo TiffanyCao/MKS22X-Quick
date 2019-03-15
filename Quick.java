@@ -21,7 +21,12 @@ public class Quick{
      //at the start, setup
     Random choose = new Random(); //choose random index for pivot
     //int pivotIndex = choose.nextInt((ending - starting) + 1) + starting;
-    int pivotIndex = findMedian(data, starting, ending); //find the median value and its index
+    int pivotIndex = (((ending-starting) / 2) + starting);
+    if((data[starting] >= data[ending] && data[starting] <= data[pivotIndex]) || (data[starting] >= data[pivotIndex] && data[starting] <= data[ending])){
+      pivotIndex = starting; //cases where the value at the start is the median
+    }else if((data[ending] >= data[starting] && data[ending] <= data[pivotIndex]) || (data[ending] >= data[pivotIndex] && data[ending] <= data[starting])){
+      pivotIndex = ending; //cases where the value at the end is the median
+    } //otherwise, the value at the middle is the median
     int pivot = data[pivotIndex]; //store pivot
     data[pivotIndex] = data[starting]; //swap pivot with value at index zero
     data[starting] = pivot;
@@ -48,6 +53,7 @@ public class Quick{
         end--; //end decreases because the value is now in the right place
       }
     }
+    System.out.println(start + " " + end);
     if(data[start] < pivot){ //if the value at the middle index is less than the pivot, switch with pivot
       int temp = data[start];
       data[start] = pivot;
@@ -62,32 +68,6 @@ public class Quick{
       return start-1; //return pivot's new index
     }
     //if(starting >= ending) return starting-1;
-  }
-
-  /**A method for finding the median
-  *@param int[] data
-  *@param int starting is the range of the array where the user wants to start
-  *@param int ending is the range of the array where the user wants to end
-  *@return int the index of the original data array that contains the median value
-  */
-  private static int findMedian(int[] data, int starting, int ending){
-    int[] ary = new int[ending-starting+1]; //create a new array with just the values between starting and ending
-    for(int i = 0; i < ary.length; i++){ //copy over the values
-      ary[i] = data[starting + i];
-    }
-    for(int i = 1; i < ary.length; i++){ //sort the values with insertion sort
-      int x; //current index
-      int temp = ary[i]; //value at the index being tested
-      for(x = i-1; (x >= 0) && (temp < ary[x]); x--){ //if the value being tested is smaller than the values of the indexes before it
-        ary[x+1] = ary[x]; //the larger values at the previous indexes shift right
-      }
-      ary[x+1] = temp; //when the value is at the correct index
-    }
-    int medianValue = ary[ary.length / 2]; //find the value at the median index
-    for(int i = starting; i <= ending; i++){ //find the index in data that corresponds with the median value
-      if(data[i] == medianValue) return i;
-    }
-    return -1; //so it compiles;
   }
 
   /**A method that prints out the array
@@ -143,7 +123,7 @@ public class Quick{
   *@param int end is the end of the partition
   */
   public static void quicksortH(int[] data, int start, int end){
-    if(start < end && start != end){ //eventually the start and end will be the same when the length of the partition range becomes one
+    if(start < end && end != start){ //eventually the start and end will be the same when the length of the partition range becomes one
       //as long as start and end are not equal, the partition range will be greater than 1, which means more can be partitioned
       int pivot = partition(data, start, end); //partition once to get a pivot
       quicksortH(data, start, pivot - 1); //partition from the start to the pivot
@@ -188,27 +168,23 @@ public class Quick{
     System.out.println(print(test3));
     */
 
-
+/*
     for(int i = 1; i < 10000; i++){
+      int[] corr = new int[i];
       int[] test = new int[i];
       int temp = i-1;
       for(int y = 0; y < test.length; y++){
         test[y] = temp;
+        corr[y] = temp;
         temp--;
       }
       //if(i == 9999) System.out.println(print(test));
       if(quickselect(test, 0) == 0 && quickselect(test, test.length-1) == i - 1){
         quicksort(test);
-        int small = 0;
+        Arrays.sort(corr);
         boolean order = true;
         for(int y = 0; y < test.length; y++){
-          if(y == 0){
-            small = test[y];
-          }else if(test[y] < small){
-            order = false;
-          }else if(order){
-            small = test[y];
-          }
+          if(test[y] != corr[y]) order = false;
         }
         if(order){
           System.out.println("success " + i);
@@ -228,31 +204,29 @@ public class Quick{
     System.out.println(quickselect(test4, 0));
     System.out.println(quickselect(test4, test4.length - 1));
 
-    /*
+    int[] corr = new int[1000000];
     int[] ary = new int[1000000];
     Random number = new Random();
+    int n = number.nextInt() % 1000;
     for(int i = 0; i < 1000000; i++){
-      ary[i] = number.nextInt();
+      ary[i] = n;
+      corr[i] = n;
+      n = number.nextInt() % 1000;
     }
-    //Arrays.sort(ary); //0m0.282s for 1,000,000; 0m1.364s for 10,000,000
+    Arrays.sort(corr); //0m0.282s for 1,000,000; 0m1.364s for 10,000,000
     quicksort(ary); //0m0.324s for 1,000.000; 0m1.871s for 10,000,000
 
-    int temp = 0;
     boolean order = true;
-    for(int i = 0; i < ary.length; i++){
-      if(i == 0){
-        temp = ary[i];
-      }else if(ary[i] < temp){
+    for(int i = 0; i < corr.length; i++){
+      if(ary[i] != corr[i] && order){
         order = false;
-      }else{
-        temp = ary[i];
+        System.out.println(i);
+        System.out.println(ary[i]);
+        System.out.println(corr[i]);
       }
     }
     System.out.println(order);
-    */
-
-    int[] testMedian = {1, 2, 8, 0, 3}; //median is 2 and index is 1
-    System.out.println(findMedian(testMedian, 0, testMedian.length-1));
+*/
   }
 
 }
