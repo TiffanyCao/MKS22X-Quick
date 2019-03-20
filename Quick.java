@@ -105,7 +105,23 @@ public class Quick{
   *@param int[] data
   */
   public static void quicksort(int[] data){
-    quicksortH(data, 0, data.length - 1); //helper function
+    quicksortInsertion(data, 0, data.length - 1); //helper function
+  }
+
+  /**A recursive helper method that partitions and sorts repeatedly until a certain length, during which insertion sort is used
+  *@param int[] data
+  *@param int start is the start of the partition
+  *@param int end is the end of the partition
+  */
+  public static void quicksortInsertion(int[] data, int start, int end){
+    if(start < end && end != start && (end - start) > 10){ //if the length of the partition is greater than 10
+      //as long as start and end are not equal, the partition range will be greater than 1, which means more can be partitioned
+      int pivot = partition(data, start, end); //partition once to get a pivot
+      quicksortInsertion(data, start, pivot - 1); //partition from the start to the pivot
+      quicksortInsertion(data, pivot + 1, end); //partition from the pivot + 1 to the end;
+    }else{ //otherwise, use insertion
+      insertionsort(data, start, end); //use insertion sort on the array within the given range
+    }
   }
 
   /**A recursive helper method that partitions and sorts repeatedly until all values are sorted
