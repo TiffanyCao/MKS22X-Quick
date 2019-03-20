@@ -122,6 +122,25 @@ public class Quick{
     }
   }
 
+  /**A method of insertion sort that only sorts within the given range of an array
+  *@param int[] data
+  *@param int lo the lower index of the range to be sorted, inclusive
+  *@param int hi the upper index of the range to be sorted, inclusive
+  */
+  public static void insertionsort(int[] data, int lo, int hi){
+    for(int i = lo + 1; i <= hi; i++){ //insertion within the bounds of lo and hi
+      //System.out.println(i);
+      //System.out.println(lo);
+      int x;
+      int temp = data[i]; //store the value to be compared
+      for(x = i - 1; (x >= lo) && (data[x] > temp); x--){ //if the values before it are greater than the value being compared...
+        //System.out.println(x);
+        data[x+1] = data[x]; //shift the values to the right
+      }
+      data[x+1] = temp; //when the value is at the correct index, set it down
+    }
+  }
+
   public static void main(String[] args){
     int[] test1 = {999, 999, 999, 4, 1, 0, 3, 2, 999, 999, 999};
     //System.out.println(quickselect(test1, 0)); //0
