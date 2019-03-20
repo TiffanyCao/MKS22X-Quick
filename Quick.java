@@ -114,7 +114,7 @@ public class Quick{
   *@param int end is the end of the partition
   */
   public static void quicksortInsertion(int[] data, int start, int end){
-    if(start < end && end != start && (end - start) > 10){ //if the length of the partition is greater than 10
+    if(start < end && (end - start) > 10){ //if the length of the partition is greater than 10
       //as long as start and end are not equal, the partition range will be greater than 1, which means more can be partitioned
       int pivot = partition(data, start, end); //partition once to get a pivot
       quicksortInsertion(data, start, pivot - 1); //partition from the start to the pivot
