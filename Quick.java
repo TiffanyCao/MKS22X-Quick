@@ -61,6 +61,65 @@ public class Quick{
     //if(starting >= ending) return starting-1;
   }
 
+  public static int[] partitionDutch(int[] data, int lo, int hi){
+    Random choose = new Random();
+    int pivotIndex = choose.nextInt((hi - lo) + 1) + lo;
+    System.out.println(pivotIndex);
+    int pivot = data[pivotIndex];
+    System.out.println(pivot);
+    data[pivotIndex] = data[lo];
+    data[lo] = pivot;
+    int lt = pivotIndex;
+    int gt = pivotIndex;
+    int start = lo + 1;
+    int end = hi;
+    while(start != end){
+      System.out.println(print(data));
+      if(data[start] > pivot){
+        int temp = data[start];
+        data[start] = data[end];
+        data[end] = temp;
+        end--;
+      }
+      if(data[start] == pivot && gt != pivotIndex){
+        int temp = data[start];
+        data[start] = data[gt + 1];
+        data[gt + 1] = data[start];
+        gt++;
+        start++;
+      }
+      if(data[start] == pivot && lt == pivotIndex && gt == pivotIndex){
+        lt = start;
+        gt = start;
+        start++;
+      }
+      if(data[start] < pivot && lt != pivotIndex){
+        int temp = data[start];
+        data[start] = data[gt + 1];
+        data[gt + 1] = data[lt];
+        data[lt] = temp;
+        lt++;
+        gt++;
+      }else start++;
+    }
+    if(lt != pivotIndex){
+      int temp = data[lt - 1];
+      data[lt - 1] = pivot;
+      data[pivotIndex] = temp;
+      lt--;
+    }
+    if(data[start] < pivot){
+      int temp = data[gt + 1];
+      data[gt + 1] = pivot;
+      data[lt] = data[start];
+      data[start] = temp;
+      gt++;
+      lt++;
+    }
+    int[] answer = {lt, gt};
+    return answer;
+  }
+
   /**A method that prints out the array
   *@return String
   */
@@ -158,7 +217,7 @@ public class Quick{
   }
 
   public static void main(String[] args){
-    int[] test1 = {999, 999, 999, 4, 1, 0, 3, 2, 999, 999, 999};
+    /*int[] test1 = {999, 999, 999, 4, 1, 0, 3, 2, 999, 999, 999};
     //System.out.println(quickselect(test1, 0)); //0
     //System.out.println(quickselect(test1, 1)); //1
     //System.out.println(quickselect(test1, 2)); //2
@@ -274,7 +333,7 @@ public class Quick{
     //Arrays.sort(array); //0m1.720s
     //quicksort(array); //0m3.238s
 
-    int[] array = new int[100000000];
+    /*int[] array = new int[100000000];
     Random numbers = new Random();
     for(int i = 0; i < array.length; i++){
       array[i] = numbers.nextInt();
@@ -282,6 +341,10 @@ public class Quick{
 
     //Arrays.sort(array); //0m12.223s
     //quicksort(array); //0m32.393s
+    */
 
+    int[] a = {1, 5, 2, 4, 1, 1, 4, 3, 5, 5, 2, 4, 4, 4};
+    System.out.println(print(partitionDutch(a, 0, a.length - 1)));
+    System.out.println(print(a));
   }
 }
