@@ -123,6 +123,22 @@ public class Quick{
   public static int quickselect(int[] data, int k){
     quickselectH(data, 0, data.length-1, k); //helper call
     return data[k]; //return the value at index k
+
+    /*
+    int lo = 0;
+    int hi = data.length - 1;
+    int pivot = partition(data, lo, hi);
+    while(lo < hi && hi != lo){
+      if(pivot > k){
+        hi = pivot - 1;
+        pivot = partition(data, lo, hi);
+      }else{
+        lo = pivot + 1;
+        pivot = partition(data, lo, hi);
+      }
+    }
+    return data[pivot];
+    */
   }
 
   /**A method that finds the kth smallest value of the array, using partition
